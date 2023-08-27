@@ -1,6 +1,7 @@
 # CoreTeam-GoogleForm 雲林科技大學 GDSC Core Team 招募表單機器人
 
 [NYUST GDSC CoreTeam 招生表單](https://docs.google.com/forms/d/e/1FAIpQLSfykA-Rgu5Bb647wVkIXBYq8XC1rzJAdMncVG-qIcEEQ4Oa0w/viewform)
+
 [For Manager](https://docs.google.com/forms/d/1GbKmfS1klG_kJ3dbhiEFlSWTj1mBGXcv9mlnnNsiEcw/edit?ts=64d1d6db)
 
 ---
