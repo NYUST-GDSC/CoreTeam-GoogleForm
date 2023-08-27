@@ -96,11 +96,11 @@ const POST_URL = "<Your Webhook URL>";
 
 ![](./doc/form_code.PNG)
 
-### step.5 設定觸發條件
+### Step.5 設定觸發條件
 
 點選 [觸發條件] -> [新增觸發條件]
 
-![](./doc/set_trigger.PNG)
+![](./doc/set_trigger3.png)
 
 設定活動類型為 [提交表單時]
 
