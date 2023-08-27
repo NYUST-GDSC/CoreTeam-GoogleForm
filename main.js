@@ -1,70 +1,59 @@
-const CHANNELS_TOKEN = "";
+const POST_URL = "WEBHOOK URL";
 
-const main = () => {
-    const sheetApp = SpreadsheetApp.openById("1cROrxY3NRZQ50Yl5O2OUKzsFf54siKyr1PVHcAQ0DDM"),
-        responseSheet = sheetApp.getSheetByName("表單回應 1"),
-        lastResponse = sheetApp.getSheetByName("database").getRange("A1")
+function onSubmit(e) {
+    const response = e.response.getItemResponses();
+    let items = [];
 
-    let responseIndex = lastResponse.getValue() + 1 //;responseIndex=2
-    let newResponse = responseSheet.getRange(`A${responseIndex}:I${responseIndex}`).getValues()[0]
+    for (const responseAnswer of response) {
+        const question = responseAnswer.getItem().getTitle();
+        const answer = responseAnswer.getResponse();
+        let parts = []
 
-    while (newResponse[0] !== "") {
-        console.log(newResponse)
+        try {
+            parts = answer.match(/[\s\S]{1,1024}/g) || [];
+        } catch (e) {
+            parts = answer;
+        }
 
-        UrlFetchApp.fetch(CHANNELS_TOKEN, {
-            method: "post",
-            contentType: "application/json",
-            payload: JSON.stringify({
-                "username": "2023 GDSC Core Team 表單通知",
-                "content": `回覆序號：${responseIndex}，有人報名 Core Team 了 歡呼!:`,
-                "embeds": [{
-                    "description": `\n**簡述申請資訊**\n> ${String(newResponse[7]).replace(/\n/g, "\n> ")}\n​`,
-                    "fields": [{
-                            "name": "姓名",
-                            "value": `${newResponse[4]}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "學號",
-                            "value": `${newResponse[3]}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "床位",
-                            "value": `${newResponse[6]}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "系所",
-                            "value": `${newResponse[5]}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "電話號碼",
-                            "value": `${newResponse[2]}`,
-                            "inline": true
-                        },
-                        {
-                            "name": "方便維修時間",
-                            "value": `星期${String(newResponse[8]).match(/(?<=星期)./g).join("、")}\n​`,
-                            "inline": true
-                        }
-                    ],
-                    "url": `https://docs.google.com/spreadsheets/d/1cROrxY3NRZQ50Yl5O2OUKzsFf54siKyr1PVHcAQ0DDM/edit#gid=228193687&range=A${responseIndex}:I${responseIndex}`,
-                    "title": "表單連結",
-                    "timestamp": newResponse[0].toISOString(),
-                    "footer": {
-                        "text": "回覆時間"
-                    },
-                    "color": 2733814
-                }]
-            })
-        })
-        lastResponse.setValue(responseIndex++)
-        newResponse = responseSheet.getRange(`A${responseIndex}:I${responseIndex}`).getValues()[0]
+        if (!answer) {
+            continue;
+        }
+
+        for (const [index, part] of Object.entries(parts)) {
+            if (index == 0) {
+                items.push({
+                    "name": question,
+                    "value": part,
+                    "inline": false
+                });
+            } else {
+                items.push({
+                    "name": question.concat(" (cont.)"),
+                    "value": part,
+                    "inline": false
+                });
+            }
+        }
     }
-}
 
-function myFunction() {
+    const options = {
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "payload": JSON.stringify({
+            "content": "‌有人填表單啦！記得安排時間面試",
+            "embeds": [{
+                "title": "表單連結",
+                "url": 'https://docs.google.com/spreadsheets/d/1FWF_r4n4kSYRK_pPVo_IAReQHq3ZgsrXgqXxTei-HW8/edit?resourcekey#gid=112893270',
+                "color": 33023, // This is optional, you can look for decimal colour codes at https://www.webtoolkitonline.com/hexadecimal-decimal-color-converter.html
+                "timestamp": new Date().toISOString(),
+                "footer": {
+                  "text": "回覆時間"
+                },
+            }]
+        })
+    };
 
-}
+    UrlFetchApp.fetch(POST_URL, options);
+};
