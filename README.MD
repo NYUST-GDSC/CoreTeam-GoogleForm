@@ -1,4 +1,4 @@
-# CoreTeam-GoogleForm 雲林科技大學 GDSC Core Team 招募表單機器人
+﻿# CoreTeam-GoogleForm 雲林科技大學 GDSC Core Team 招募表單機器人
 
 [NYUST GDSC CoreTeam 招生表單](https://docs.google.com/forms/d/e/1FAIpQLSfykA-Rgu5Bb647wVkIXBYq8XC1rzJAdMncVG-qIcEEQ4Oa0w/viewform)
 
@@ -96,7 +96,25 @@ const POST_URL = "<Your Webhook URL>";
 
 ![](./doc/form_code.PNG)
 
-貼上程式碼，大功告成 !!!
+### step.5 設定觸發條件
+
+點選 [觸發條件] -> [新增觸發條件]
+
+![](./doc/set_trigger.PNG)
+
+設定活動類型為 [提交表單時]
+
+![](./doc/set_trigger2.png)
+
+若出現以下情形，代表程式碼內尚未有任何函示可以觸發。解決方法：儲存程式碼並重新整理
+
+![](./doc/set_trigger_error.png)
+
+設定完觸發條件後，就大功告成啦 !!!
+
+成果圖
+
+![](./doc/success.png)
 
 ---
 
